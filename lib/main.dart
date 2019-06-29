@@ -6,21 +6,60 @@ void main() {
     .document("pontuacao1") //Tabela = documento => id
     .setData({"Ricardo": "100", "teste":  "123"}); //dado
 */
+    String mySt = "";
     Firestore db = Firestore.instance;
+    void setData(){
     db.collection("usuarios")
-    .document("COD-002")
+    .document("-LiZDaGCQW-HHk7Mkf8z")
     .setData(
       {"nome" : "Ciclano de Tal", "idade":"35"}
     );
-    db.collection("usuarios")
-        .document("COD-003")
-        .setData(
-        {"nome" : "Bertrano de Tal", "idade":"34"}
-    );
+    }
+    void addFire(){
     db.collection("usuarios")
     .add(
       {"nome": "Ricardo", "idade" : "23"}
-    );
+    );}
+
+    void test() async {
+      DocumentReference ref = await db.collection("usuarios")
+          .add(
+        {"nome":"Novo usuário", "idade" : "05"}
+      );
+      print("código: "+ ref.documentID); //retornou: -LiZDaGCQW-HHk7Mkf8z
+      mySt = ref.documentID;
+    }
+
+    void delete() {
+      db.collection("usuarios")
+          .document("-LiZK98dHSHlIWBH3GMH")
+          .delete();
+    }
+    void recover() async {
+      DocumentSnapshot snapshot = await db.collection("usuarios")
+      .document("-LiZK98dHSHlIWBH3GMH").get();
+
+      var user = snapshot.data;
+      print("Usuario [nome: " + user["nome"] + ", idade: " +
+          user["idade"] + "]");
+    }
+
+    void selectAll() async {
+      QuerySnapshot querySnapshot = await db.collection("usuarios")
+      .getDocuments();
+      for (DocumentSnapshot s in querySnapshot.documents) {
+        var user = s.data;
+        print("Usuario [nome: " + user["nome"] + ", idade: " +
+            user["idade"] + "]");
+      }
+    }
+
+    //addFire();
+    //test();
+    //setData();
+    //recover();
+    //delete();
+    selectAll();
 
   runApp(Home());
 }
