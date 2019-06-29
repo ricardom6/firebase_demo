@@ -8,11 +8,19 @@ void main() {
 */
     Firestore db = Firestore.instance;
     db.collection("usuarios")
-    .document("COD-001")
+    .document("COD-002")
     .setData(
-      {"nome" : "Fulano de Tal", "idade":"33"}
+      {"nome" : "Ciclano de Tal", "idade":"35"}
     );
-
+    db.collection("usuarios")
+        .document("COD-003")
+        .setData(
+        {"nome" : "Bertrano de Tal", "idade":"34"}
+    );
+    db.collection("usuarios")
+    .add(
+      {"nome": "Ricardo", "idade" : "23"}
+    );
 
   runApp(Home());
 }
